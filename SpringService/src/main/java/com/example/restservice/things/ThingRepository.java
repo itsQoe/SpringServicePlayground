@@ -1,7 +1,7 @@
 package com.example.restservice.things;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface ThingRepository extends CrudRepository<Thing, Long> {
+interface ThingRepository extends JpaRepository<Thing, Long> {
 
 }

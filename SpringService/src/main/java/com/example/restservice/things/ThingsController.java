@@ -8,7 +8,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/things")
@@ -18,8 +20,10 @@ public class ThingsController {
     private final ThingRepository thingRepo;
 
     @GetMapping
-    public Iterable<Thing> getThings() {
-        return thingRepo.findAll();
+    public List<ThingListDTO> getThings() {
+        return thingRepo.findAll().stream()
+                .map(thing -> new ThingListDTO(thing.getName(), thing.getDescription()))
+                .collect(Collectors.toList());
     }
 
     @PutMapping
@@ -27,6 +31,8 @@ public class ThingsController {
         Thing newThing = new Thing(null, thingDTO.name(), thingDTO.description());
         return thingRepo.save(newThing);
     }
+
+    @PostMapping("/")
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
