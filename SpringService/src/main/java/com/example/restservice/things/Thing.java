@@ -29,4 +29,7 @@ public class Thing {
     @Size(min = 0, max = 1024)
     private String description;
 
+    @NotNull
+    private Long userId;
+
 }
